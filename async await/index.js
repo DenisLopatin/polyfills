@@ -1,7 +1,7 @@
 // This "polyfill" does not find any practical application
 // Because it's hard to find a development environment that supports ES6 (function generator and promise), but not ES7 (async await)
-// Imagine that instead of "async" you use "*", and instead of "await" - " yield"
-// Errors at the stage of executing asynchronous tasks in promise can be delegated to an iterator object (iterator.throw())
+// Imagine that instead of "async" you use "*", and instead of "await" - "yield"
+// Errors at the stage of executing asynchronous tasks in promise can be delegated to an iterator object ( iterator.throw() )
 // All errors will be handled by the try-catch code block
 
 /**
