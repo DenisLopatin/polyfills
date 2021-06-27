@@ -1,9 +1,3 @@
-// This "polyfill" does not find any practical application
-// Because it's hard to find a development environment that supports ES6 (function generator and promise), but not ES7 (async await)
-// Imagine that instead of "async" you use "*", and instead of "await" - "yield"
-// Errors at the stage of executing asynchronous tasks in promise can be delegated to an iterator object ( iterator.throw() )
-// All errors will be handled by the try-catch code block
-
 /**
  * @function request - the generator function simulating the operation of async await
  * @param {string} url - url address
@@ -47,11 +41,6 @@ function getData(response) {
 
 const iterator = request('http://jsonplaceholder.typicode.com/users');
 iterator.next();
-
-// You can use a special function for this - request
-// It accepts a generator function, a url, and a callback function
-// Returns a Promise, but you can ignore it and pass all the logic of working with the received data to the callback function
-// Both options are possible
 
 /**
  * @function request - A function that provides functionality for working with asynchronous code in a synchronous style

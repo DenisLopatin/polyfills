@@ -1,5 +1,7 @@
 ## Polyfills for array methods
 
+Include forEach, map, filter, every, some, reduce.
+
 These polyfills supports such old browsers as ie5 and others. Polyfills are not added to the Array.prototype, they are created as functions.
 
 **Notice**: *All old browsers support the work of polyfills only with arrays! This doesn't work with strings and DOM etc*.
