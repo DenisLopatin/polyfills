@@ -430,7 +430,7 @@ function every(value, callback, context) {
  * @returns { boolean } - true or false
  */
 
- function some(value, callback, context) {
+function some(value, callback, context) {
     var current = Object(value);
     var length = current.length;
     var index = 0;
@@ -509,10 +509,10 @@ function every(value, callback, context) {
  * @param { * } value - current value (prefer - array)
  * @param { function } callback - callback function (element, index, currentArray)
  * @param { object } context - context for calling the function
- * @returns { boolean } - new created array
+ * @returns { * } - value
  */
 
- function reduce(value, callback, initial) {
+function reduce(value, callback, initial) {
     var current = Object(value);
     var length = current.length;
     var index = 0;
