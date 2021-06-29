@@ -1,10 +1,10 @@
 /**
- * @function request - the generator function simulating the operation of async await
+ * @function receive - the generator function simulating the operation of async await
  * @param {string} url - url address
  * @returns {undefined}
  */
 
- function* request(url) {
+ function* receive(url) {
     try {
         const response = yield getResponse(url);
         const result = yield getData(response);
@@ -39,7 +39,7 @@ function getData(response) {
         .catch((error) => iterator.throw(error));
 }
 
-const iterator = request('http://jsonplaceholder.typicode.com/users');
+const iterator = receive('http://jsonplaceholder.typicode.com/users');
 iterator.next();
 
 /**
@@ -49,8 +49,6 @@ iterator.next();
  * @param {Function} callback - callback function
  * @returns {Promise}
  */
-
-/* <-- delete comment -->
 
 function request(generator, url, callback) {
     const iterator = generator(url, callback);
@@ -62,18 +60,14 @@ function request(generator, url, callback) {
         .catch((error) => iterator.throw(error));
 }
 
-*/
-
 /**
- * @function getData - the generator function simulating the operation of async await
+ * @function receiveResponse - the generator function simulating the operation of async await
  * @param {string} url - url address
  * @param {Function} callback - callback function
  * @returns {Promise, Object} - in this example, it will return Promise
  */
 
-/* <-- delete comment -->
-
-function* getData(url, callback) {
+function* receiveResponse(url, callback) {
     try {
         const response = yield fetch(url);
         const data = yield response.json();
@@ -85,12 +79,10 @@ function* getData(url, callback) {
 }
 
 const result = request(
-    getData,
+    receiveResponse,
     'http://jsonplaceholder.typicode.com/users',
     (data) => {
         console.log(data); // js object [{...}];
     },
 );
 console.log(result); // Promise
-
-*/

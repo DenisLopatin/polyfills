@@ -223,13 +223,14 @@ function some(value, callback, context) {
  * @returns { * } - value
  */
 
-function reduce(value, callback, initial) {
+ function reduce(value, callback, initial) {
     'use strict';
     var current = Object(value);
     var length = current.length;
     var index = 0;
     var accumulator;
     var item;
+    var isEmpty;
 
     if (arguments.length < 2) {
         throw new Error(
@@ -250,7 +251,14 @@ function reduce(value, callback, initial) {
     if (arguments.length === 3) {
         accumulator = initial;
     } else {
-        accumulator = current[index++];
+        for (index in current) {
+            isEmpty = false;
+            accumulator = current[index++];
+            break;
+        }
+        if (isEmpty === undefined) {
+            throw new Error('Reduce of empty array with no initial value');
+        }
     }
 
     while (index < length) {

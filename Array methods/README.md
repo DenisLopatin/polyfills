@@ -154,7 +154,7 @@ Does not output missing values.
 
 The original method map:
 
-    var array = [1, 2,, 3,, 4, 5];
+    var array = [1, 2, , 3, , 4, 5];
     var result = array.map(function(number) {
         console.log(number); // 1, 2, 3, 4, 5
         return number * 2;
@@ -163,7 +163,7 @@ The original method map:
     
 Polyfill:
 
-    var array = [1, 2,, 3,, 4, 5];
+    var array = [1, 2, , 3, , 4, 5];
     var result = map(array, function(number) {
         console.log(number); // 1, 2, 3, 4, 5
         return number * 2;
@@ -538,12 +538,13 @@ Polyfill:
      */
 
     function reduce(value, callback, initial) {
-       'use strict';
+        'use strict';
         var current = Object(value);
         var length = current.length;
         var index = 0;
         var accumulator;
         var item;
+        var isEmpty;
 
         if (arguments.length < 2) {
             throw new Error(
@@ -564,7 +565,14 @@ Polyfill:
         if (arguments.length === 3) {
             accumulator = initial;
         } else {
-            accumulator = current[index++];
+            for (index in current) {
+                isEmpty = false;
+                accumulator = current[index++];
+                break;
+            }
+            if (isEmpty === undefined) {
+                throw new Error('Reduce of empty array with no initial value');
+            }
         }
 
         while (index < length) {
@@ -618,3 +626,79 @@ Polyfill:
         0
     );
     console.log(result); // 60
+
+Skips empty values and returns a number. Pay attention to the absence of the operator 'return'.
+
+The original method reduce:
+
+    var array = [, , , 1];
+    var result = array.reduce(function (acc, number) {
+        acc + number;
+    });
+    console.log(result); // 1
+
+Polyfill:
+
+    var array = [, , , 1];
+    var result = reduce(array, function (acc, number) {
+        acc + number;
+    });
+    console.log(result); // 1
+
+Returns undefined if you omit this operator with multiple values in the array.
+
+The original method reduce:
+
+    var array = [, , , 1, 2];
+    var result = array.reduce(function (acc, number) {
+        acc + number;
+    });
+    console.log(result); // undefined
+
+Polyfill:
+
+    var array = [, , , 1, 2];
+    var result = reduce(array, function (acc, number) {
+        acc + number;
+    });
+    console.log(result); // undefined
+
+Throws an error if iterated over an empty array.
+
+The original method reduce:
+
+    var array = [];
+    var result = array.reduce(function (acc, number) {
+        return acc + number;
+    });
+    console.log(result); // TypeError: Reduce of empty array with no initial value
+
+Polyfill:
+
+    var array = [];
+    var result = reduce(array, function (acc, number) {
+        return acc + number;
+    });
+    console.log(result); // Error: Reduce of empty array with no initial value
+
+This will work if you set a value for the accumulate.
+
+The original method reduce:
+
+    var array = [];
+    var result = array.reduce(function (acc, number) {
+        return acc + number;
+    }, 0);
+    console.log(result); // 0
+
+Polyfill:
+
+    var array = [];
+    var result = reduce(
+        array,
+        function (acc, number) {
+            return acc + number;
+        },
+        0
+    );
+    console.log(result); // 0

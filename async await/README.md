@@ -7,12 +7,12 @@ Imagine that instead of "async" you use "*", and instead of "await" - "yield".
 Errors at the stage of executing asynchronous tasks in promise can be delegated to an iterator object ( iterator.throw() ). All errors will be handled by the try-catch code block.
 
     /**
-     * @function request - the generator function simulating the operation of async await
+     * @function receive - the generator function simulating the operation of async await
      * @param {string} url - url address
      * @returns {undefined}
      * */
 
-    function* request(url) {
+    function* receive(url) {
         try {
             const response = yield getResponse(url);
             const result = yield getData(response);
@@ -47,7 +47,7 @@ Errors at the stage of executing asynchronous tasks in promise can be delegated 
             .catch((error) => iterator.throw(error));
     }
 
-    const iterator = request('http://jsonplaceholder.typicode.com/users');
+    const iterator = receive('http://jsonplaceholder.typicode.com/users');
     iterator.next();
    
 You can use a special function for this - request.
@@ -74,13 +74,13 @@ Both options are possible.
      }
      
      /**
-      * @function getData - the generator function simulating the operation of async await
+      * @function receiveResponse - the generator function simulating the operation of async await
       * @param {string} url - url address
       * @param {Function} callback - callback function
       * @returns {Promise, Object} - in this example, it will return Promise
       */
       
-      function* getData(url, callback) {
+      function* receiveResponse(url, callback) {
           try {
               const response = yield fetch(url);
               const data = yield response.json();
@@ -92,7 +92,7 @@ Both options are possible.
       }
       
       const result = request(
-          getData,
+          receiveResponse,
           'http://jsonplaceholder.typicode.com/users',
           (data) => {
               console.log(data); // js object [{...}];
