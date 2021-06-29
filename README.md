@@ -1,5 +1,5 @@
 ### My polyfills.
 
 # Include:
-* array methods
+* popular array methods
 * async await
